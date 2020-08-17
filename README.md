@@ -1,42 +1,38 @@
-# egg-syhh-micro
+# egg-evo
 
-[![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
-[![Known Vulnerabilities][snyk-image]][snyk-url]
-[![npm download][download-image]][download-url]
-
-[npm-image]: https://img.shields.io/npm/v/egg-syhh-micro.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/egg-syhh-micro
-[travis-image]: https://img.shields.io/travis/eggjs/egg-syhh-micro.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-syhh-micro
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-syhh-micro.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-syhh-micro?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-syhh-micro.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-syhh-micro
-[snyk-image]: https://snyk.io/test/npm/egg-syhh-micro/badge.svg?style=flat-square
-[snyk-url]: https://snyk.io/test/npm/egg-syhh-micro
-[download-image]: https://img.shields.io/npm/dm/egg-syhh-micro.svg?style=flat-square
-[download-url]: https://npmjs.org/package/egg-syhh-micro
-
-<!--
-Description here.
--->
+  egg框架的扩展 该扩展使得在使用egg开发微服务时能够统一
+  
+  [middleware扩展]: './app/middleware/'
+  
+  
+  1. 统一错误处理  errorHandler 中间件
+  2. jwt          jwt 中间件
+  
+  [ctx扩展]: './app/extend/context' 
+  3. 参数校验 ctx.validator
+  4. 统一错误抛出处理  
+  
+  [app扩张]: './app/extend/application'
+  5. jwt 的相关方法
+  
+  配合TS食用更佳
+  
+  
+  
 
 ## Install
 
 ```bash
-$ npm i egg-syhh-micro --save
+$ npm i egg-evo --save
 ```
 
 ## Usage
 
 ```js
 // {app_root}/config/plugin.js
-exports.syhhMicro = {
+exports.evo = {
   enable: true,
-  package: 'egg-syhh-micro',
+  package: 'egg-evo',
 };
 ```
 
@@ -44,19 +40,39 @@ exports.syhhMicro = {
 
 ```js
 // {app_root}/config/config.default.js
-exports.syhhMicro = {
+config.jwt = {
+    jwt: {
+      secret: '',
+      unless: { // 无需
+        path: [
+          'xxx/login',
+        ],
+      },
+    },
+}
+config.syhhMicro = {
+    SUCCESS_CODE: 20000, // 数据返回时Code的值配置
 };
+config.middleware = [
+    'errorHandler', 'jwt',
+];
 ```
 
 see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Example
 
-<!-- example here -->
+可以直接在ctx或者service里面  使用如下方法
+```js
+ctx.resp()
+ctx.throwLogic()
+ctx.throwUnauth()
+ctx.validator()
+```
 
 ## Questions & Suggestions
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+Please open an issue [here](https://github.com/turing-babycare/egg-evo/issues).
 
 ## License
 

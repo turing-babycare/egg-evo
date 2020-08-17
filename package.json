@@ -54,12 +54,12 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/turing-babycare/egg-evo.git"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/turing-babycare/egg-evo/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/turing-babycare/egg-evo#readme",
   "author": "moyuanhua@syhh",
   "license": "MIT"
 }
