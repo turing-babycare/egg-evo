@@ -1,8 +1,12 @@
 
 language: node_js
 node_js:
-  - '8'
-  - '10'
+  - node
+  - 14
+  - 13
+  - 12
+  - 11
+  - 10
 before_install:
   - npm i npminstall -g
 install:
@@ -10,7 +14,14 @@ install:
 script:
   - npm run lint
   - npm run tsc
-  - npm run ci
+#   - npm run ci
   
-after_script:
-  - npminstall codecov && codecov
+# after_script:
+#   - npminstall codecov && codecov
+deploy:
+  provider: npm
+  email: "$NPM_EMAIL"
+  api_token: "$NPM_TOKEN"
+  skip_cleanup: true
+  on:
+    tags: true
