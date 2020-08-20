@@ -50,9 +50,7 @@ config.jwt = {
       },
     },
 }
-config.syhhMicro = {
-    SUCCESS_CODE: 20000, // 数据返回时Code的值配置
-};
+
 config.middleware = [
     'errorHandler', 'jwt',
 ];
@@ -65,8 +63,9 @@ see [config/config.default.js](config/config.default.js) for more detail.
 可以直接在ctx或者service里面  使用如下方法
 ```js
 ctx.resp()
+ctx.success()
 ctx.throwLogic()
-ctx.throwUnauth()
+ctx.throwUnAuth()
 ctx.validator()
 ```
 

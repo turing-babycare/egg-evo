@@ -55,7 +55,7 @@ export default {
     }
     this.body = respBody;
   },
-  
+
   success(this: Context, data: any, message = 'SUCCESS', code = 20000) {
     this.body = {
       code, // 20000 是后台自定义的code 代表数据返回
@@ -81,7 +81,7 @@ export default {
   getUser(this: Context): JWTUserPayload {
     const payload = {
       id: this.state.user.id,
-      _id: this.state.user?.data?._id
+      _id: this.state.user?.data?._id,
     };
     return payload;
   },

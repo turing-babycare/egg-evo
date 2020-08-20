@@ -39,7 +39,7 @@
     "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",
     "pkgfiles": "egg-bin pkgfiles",
     "autod": "autod",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix",
     "clean": "ets clean",
     "tsc": "ets && tsc -p tsconfig.json"
   },
