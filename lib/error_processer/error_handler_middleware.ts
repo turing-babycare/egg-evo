@@ -51,14 +51,14 @@ export default function errorHandler() {
         message: e.message || '未知错误',
         error: e.stack,
       };
-      const loggerOpitons: ILoggerOptions = {
+      const loggerOptions: ILoggerOptions = {
         type: LoggerOptionsType.info,
         label: LoggerMsgLabel.logic,
       };
       if (e instanceof LogicError) {
-        loggerOpitons.label = LoggerMsgLabel.logic;
+        loggerOptions.label = LoggerMsgLabel.logic;
       } else if (e instanceof UnauthorizedError) {
-        loggerOpitons.label = LoggerMsgLabel.unauthorized;
+        loggerOptions.label = LoggerMsgLabel.unauthorized;
         if (e.code === 'credentials_bad_scheme') {
           responseBody.message = '登录失败，登录信息有误#1';
         }
@@ -75,15 +75,15 @@ export default function errorHandler() {
           responseBody.message = '登录失败，登录信息有误#5';
         }
       } else if (e instanceof ValidateError) {
-        loggerOpitons.label = LoggerMsgLabel.validate;
+        loggerOptions.label = LoggerMsgLabel.validate;
         responseBody.error = e.errors;
       } else {
-        loggerOpitons.type = LoggerOptionsType.error;
-        loggerOpitons.label = LoggerMsgLabel.unhandled;
+        loggerOptions.type = LoggerOptionsType.error;
+        loggerOptions.label = LoggerMsgLabel.unhandled;
         responseBody.message = `服务器内部错误：${e.message || '未知错误'}`;
       }
 
-      ctx.logger[loggerOpitons.type]('[%s][hints: %s] errmsg: %s \nstack: %s \nrequest: %s \ndetail: %s', loggerOpitons.label, hints, e.message || 'null', e.stack, JSON.stringify({
+      ctx.logger[loggerOptions.type]('[%s][hints: %s] errmsg: %s \nstack: %s \nrequest: %s \ndetail: %s', loggerOptions.label, hints, e.message || 'null', e.stack, JSON.stringify({
         url: ctx.request.url,
         method: ctx.request.method,
         query: ctx.query,
