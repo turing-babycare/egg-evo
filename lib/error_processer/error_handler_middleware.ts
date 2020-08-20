@@ -3,7 +3,14 @@ import LogicError from './errors/logic_error';
 import { UnauthorizedError } from 'koa-jwt2';
 import ValidateError from './errors/validate_error';
 import { randomBytes } from 'crypto';
-import { mode } from 'config/config.default';
+
+export const enum mode {
+  dev = 'dev',
+  prod = 'prod',
+  stage = 'stage'
+}
+
+
 enum LoggerOptionsType {
   info = 'info',
   error = 'error',
@@ -16,7 +23,7 @@ enum LoggerMsgLabel {
   unhandled = 'REQUEST_UNHANDLED_EXCEPTION'
 }
 
-interface ILoggerOpitons {
+interface ILoggerOptions {
   type: LoggerOptionsType;
   label: LoggerMsgLabel;
 }
@@ -44,7 +51,7 @@ export default function errorHandler() {
         message: e.message || '未知错误',
         error: e.stack,
       };
-      const loggerOpitons: ILoggerOpitons = {
+      const loggerOpitons: ILoggerOptions = {
         type: LoggerOptionsType.info,
         label: LoggerMsgLabel.logic,
       };
@@ -76,14 +83,15 @@ export default function errorHandler() {
         responseBody.message = `服务器内部错误：${e.message || '未知错误'}`;
       }
 
-      ctx.logger[loggerOpitons.type]('[%s][hints: %s] errmsg: %s \nstack: %s \nrequest: %s', loggerOpitons.label, hints, e.message || 'null', e.stack, JSON.stringify({
+      ctx.logger[loggerOpitons.type]('[%s][hints: %s] errmsg: %s \nstack: %s \nrequest: %s \ndetail: %s', loggerOpitons.label, hints, e.message || 'null', e.stack, JSON.stringify({
         url: ctx.request.url,
         method: ctx.request.method,
         query: ctx.query,
         params: ctx.params,
         body: ctx.request.body,
         header: ctx.request.headers,
-      }, null, 2));
+      }, null, 2), e.detail ? JSON.stringify(e.detail, null, 2) : 'null');
+
       responseBody.message = `${responseBody.message} [hints: ${hints}]`;
       if (ctx.app.config.appMode === mode.prod) {
         delete responseBody.error;

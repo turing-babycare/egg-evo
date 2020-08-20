@@ -6,12 +6,6 @@ interface JWTOptions {
   secret: Secret;
 }
 
-
-export interface JwtConfig {
-  secret: string;
-  unless?: object[];
-}
-
 export default class JWT {
   constructor(public options: JWTOptions) {}
 

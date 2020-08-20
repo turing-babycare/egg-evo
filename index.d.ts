@@ -11,7 +11,6 @@ type AutoInstanceType<T, U = T extends CanExportFunc ? T : T extends AnyFunc ? R
 
 declare module 'egg' {
   interface Application extends AutoInstanceType<typeof pluginApplication> {
-    model: IModel,
   }
   
   interface Context extends AutoInstanceType<typeof pluginContext> {
